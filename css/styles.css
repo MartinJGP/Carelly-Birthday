@@ -85,26 +85,25 @@ GENERAL CLASSES
 .button {
     margin-top: 30px;
     text-align: center;
-    padding: auto;
+    padding: 10px;
     font-size: 24px;
     height:auto;
 }
 .button a {
     text-decoration: none;
     display: inline-block;
-    width: auto;
-    height: 30px;
     background: #9b5c75;
     color: #ffffff;
     font-family: 'Economica', sans-serif;
     text-align: center;
     text-transform: uppercase;
     border: #8c6274 solid 3px;
-    font-size: 32px; /* Increase font size */
+    font-size: 32px;
     line-height: 32px;
     border-radius: 10px;
     cursor: pointer;
-    padding: auto auto auto 40px;
+    padding: 10px 30px;
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
 .button a:hover {
     background: #efefef;
