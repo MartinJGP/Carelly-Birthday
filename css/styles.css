@@ -87,6 +87,7 @@ GENERAL CLASSES
     text-align: center;
     padding: 30px;
     font-size: 24px;
+    height:auto;
 }
 .button a {
     text-decoration: none;
