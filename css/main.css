@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,900&display=swap');
+*{
+    font-family: 'Poppins',cursive;
+}
+body{
+    color: azure;
+    width: 100%;
+    height: 82vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+
+    height: 100vh;
+    overflow: hidden;
+    /* padding-top: -30; */
+}
+
+/* Añade esto en tu archivo main.css */
+@keyframes caida {
+    0% {
+        transform: translate(var(--randomOffset), -10vh);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.2;
+    }
+    70% {
+        opacity: 0.2;
+    }
+    100% {
+        transform: translate(var(--randomOffset), 100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+
+
+
+.vaca {
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: calc(50% + var(--randomOffset)); /* Ajustado para usar correctamente la variable */
+    width: 150px;
+    height: 130px;
+    background-image: url('../images/flor.png');
+    background-size: cover;
+    animation: caida 8s linear infinite;
+    z-index: 1;
+}
+
+
+.botones{
+    padding: 9px;
+    border-radius: 80px;
+    background-color: transparent;
+    border: none;
+    z-index: 3;
+}
+
+.botones a{
+    background-color: #520675;
+    padding: 9px;
+    border-radius: 80px;
+    -webkit-border-radius: 80px;
+    -moz-border-radius: 80px;
+    -ms-border-radius: 80px;
+    -o-border-radius: 80px;
+
+}
+
+.botones a:focus{
+    background-color: rgb(50, 194, 194);
+}
+
+.greetings,.greetings-2{
+    font-size: 7rem;
+    font-weight: 900;
+    z-index: 3;
+}
+.greetings-3{
+    font-size: 7rem;
+    font-weight: 900;
+    z-index: 3;
+}
+.greetings-3 > span{
+    color: #fff;
+    text-shadow: 0 0 12px #720ea0, 0 0 50px #b41be2, 0 0 100px #6309b8;
+    z-index: 3;
+}
+.greetings > span{
+    animation: glow 2.5s ease-in-out infinite;
+    z-index: 3;
+}
+.greetings-2 > span{
+    animation: glow 2.5s ease-in-out infinite;
+    z-index: 3;
+}
+@keyframes glow{
+    0%, 100%{
+        color: #fff;
+        text-shadow: 0 0 12px #39c6d6, 0 0 50px #39c6d6, 0 0 100px #39c6d6;
+    }
+    10%, 90%{
+        color: #111;
+        text-shadow: none;
+    }
+}
+.greetings > span:nth-child(1){
+    animation-delay: .2s ;
+}
+.greetings > span:nth-child(2){
+    animation-delay: .4s ;
+}
+.greetings > span:nth-child(3){
+    animation-delay: .6s;
+}
+.greetings > span:nth-child(4){
+    animation-delay: .8s;
+}
+.greetings > span:nth-child(5){
+    animation-delay: 1s;
+}
+.greetings > span:nth-child(6){
+    animation-delay: 1.2s;
+}
+.greetings-2 > span:nth-child(1){
+    animation-delay: 1.4s;
+}
+.greetings-2 > span:nth-child(2){
+    animation-delay: 1.5s;
+}
+.greetings-2 > span:nth-child(3){
+    animation-delay: 1.6s;
+}
+.greetings-2 > span:nth-child(4){
+    animation-delay: 1.7s;
+}
+.greetings-2 > span:nth-child(5){
+    animation-delay: 1.8s;
+}
+.greetings-2 > span:nth-child(6){
+    animation-delay: 1.9s;
+}
+.greetings-2 > span:nth-child(7){
+    animation-delay: 2.0s;
+}
+.greetings-2 > span:nth-child(8){
+    animation-delay: 2.1s;
+}
+.greetings-2 > span:nth-child(9){
+    animation-delay: 2.2s;
+}
+.greetings-2 > span:nth-child(10){
+    animation-delay: 2.3s;
+}
+
+
+.description{
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    z-index: 3;
+}
+
+.button a{
+    text-decoration: none;
+    font-size: 1rem;
+    color: #111;
+}
+.credits{
+    font-size: 1rem;
+    margin-top: 20px;
+    z-index: 3;
+    position: absolute;
+    bottom: 0;
+}
+
+
+
+@media screen and (max-width:574px){
+    .greetings,.greetings-2{
+        display: block;
+        font-size: 3.5rem;
+        font-weight: 700;
+        text-align: center;
+    }
+    .greetings-2{
+        font-size: 2.6rem;
+    }
+    .greetings-3{
+        display: block;
+        font-size: 4rem;
+        font-weight: 800;
+        text-align: center;
+    }
+    .description{
+        font-size: 1rem;
+        text-align: center;
+        margin: 20px;
+    }
+
+    .button a{
+        font-size: 1rem;
+    }
+}
+

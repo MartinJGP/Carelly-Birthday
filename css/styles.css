@@ -1,0 +1,500 @@
+/*-------------------------------------------------
+GLOBALS CLASSES 
+-------------------------------------------------*/
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Lato', sans-serif;
+    font-size: 24px;
+    color: #7c7c7c;
+    background: url(../images/bg4.jpg) repeat;
+}
+img {
+    border: none;
+    max-width: 100%;
+    height: auto;
+}
+h1 {
+    font-size: 45px;
+    color: #fff;
+    font-family: 'Economica', sans-serif;
+    font-weight: normal;
+    text-transform: uppercase;
+    text-align: center;
+}
+h2 {
+    font-family: 'Economica', sans-serif;
+    font-size: 30px;
+    color: #ac74d2;
+    font-weight: normal;
+    text-transform: uppercase;
+    text-align: center;
+}
+p {
+    line-height: 20px;
+    text-align: center;
+
+}
+a {
+    text-decoration: none;
+    color: #858585;
+}
+a:hover {
+    color: #370d4d;
+}
+/*-------------------------------------------------
+GENERAL CLASSES
+-------------------------------------------------*/
+.img {
+    width: 100%;
+    height: auto;
+}
+.mar-top30 {
+    margin-top: 30px;
+}
+.mar-top60 {
+    margin-top: 60px;
+}
+.mar-right40 {
+    margin-right: 40px;
+}
+.mar-right50 {
+    margin-right: 50px;
+}
+.mar-bottom20 {
+    margin-bottom: 20px;
+}
+.padding-top40 {
+    padding-top: 40px;
+}
+.float-left {
+    float: left;
+}
+.float-right {
+    float: right;
+}
+.clearing {
+    clear: both;
+}
+.panel {}
+.title {}
+.content {}
+.button {
+    margin-top: 30px;
+    text-align: center;
+    padding: 30px;
+    font-size: 24px;
+}
+.button a {
+    text-decoration: none;
+    display: inline-block;
+    width: auto;
+    height: 30px;
+    background: #9b5c75;
+    color: #ffffff;
+    font-family: 'Economica', sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+    border: #8c6274 solid 3px;
+    font-size: 32px; /* Increase font size */
+    line-height: 32px;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px 20px 40px;
+}
+.button a:hover {
+    background: #efefef;
+    color: #3d232f;
+}
+
+.wrap1 {
+    background: url(../images/bg1.jpg);
+    border-bottom: #fff solid 1px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.wrap2 {
+    overflow: hidden;
+    background: url(../images/bg2.jpg);
+    padding: 20px;
+}
+.wrap3 {
+    overflow: hidden;
+    background: url(../images/bg3.jpg);
+    padding: 20px;
+}
+.wrap4 {
+    overflow: hidden;
+    background: url(../images/bg4.jpg);
+    padding: 20px;
+}
+.container {
+    width: 100%;
+    max-width: 888px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: url(../images/shadows.png) repeat-y;
+}
+.page-content .content p {
+    padding-bottom: 20px;
+}
+/*-------------------------------------------------
+HEADER CLASSES
+-------------------------------------------------*/
+.header {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding-top: 70px;
+    text-align: center;
+}
+.logo {
+    float: none;
+    text-align: center;
+}
+.logo h1 {
+    font-size: 80px;
+    color: #533c47;
+}
+
+.menu {
+    float: none;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.menu ul {
+    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+}
+.menu ul li {
+    display: inline-block;
+    margin: 0 10px;
+}
+.menu ul li a {
+    color: #b9b9e5;
+    font-size: 30px;
+    font-family: 'Economica', sans-serif;
+    text-transform: uppercase;
+}
+.menu ul li a:hover {
+    color: #ffffff;
+    background: #623b83;
+}
+
+.banner {
+    margin: 0 auto;
+}
+.banner-shadows {
+    background: url(../images/shadows1.png) no-repeat center;
+    width: 100%;
+    height: 38px;
+}
+
+/*-------------------------------------------------
+BOX CLASSES
+-------------------------------------------------*/
+.box {
+    width: 100%;
+    max-width: 420px;
+    float: none;
+    margin: 40px auto;
+    padding-bottom: 40px;
+}
+.box .title {
+    background: #523141;
+    border: #603d47 solid 1px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.box .content p {
+    color: #937a81;
+}
+/*-------------------------------------------------
+SERVICES CLASSES
+-------------------------------------------------*/
+.title {
+    background: #402834;
+    border: #ffffff solid 1px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.service {
+    float: none;
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto 40px;
+}
+.service img {
+    padding: 6px;
+    background: #fffbfa;
+}
+.service .shadows {
+    background: url(../images/shadows2.png) no-repeat;
+    width: 100%;
+    height: 20px;
+}
+.service .title {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+.service .title h2 {
+    color: #533c47;
+    font-weight: bold;
+}
+.service .content {
+    text-align: center;
+}
+.service .button {
+    margin-top: 34px;
+}
+
+/*-------------------------------------------------
+LEFTCOL CLASSES
+-------------------------------------------------*/
+
+.leftcol {
+    width: 100%;
+    max-width: 570px;
+    float: none;
+    margin: 0 auto;
+}
+.leftcol .title {
+    background: #523141;
+}
+.leftcol h2 {
+    color: #533c47;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.leftcol .panel {
+    border-bottom: #e1e1e1 solid 1px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+}
+.leftcol .panel.borderbotm-none {
+    border-bottom: none;
+}
+
+.contact-form {
+    padding: 30px 0;
+    width: 100%;
+    max-width: 530px;
+    margin: 0 auto;
+}
+.contact-form label {
+    display: block;
+    padding: 10px 0;
+}
+.contact-form label span {
+    display: block;
+    color: #523141;
+    font-size: 16px;
+    font-family: 'Oswald', sans-serif;
+    float: left;
+    width: 100%;
+    text-align: left;
+    padding: 5px 0;
+}
+.contact-form .input_text, .contact-form .message {
+    padding: 10px;
+    width: 100%;
+    background: url(../images/bg1.jpg);
+    border: none;
+    color: #523141;
+    outline: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+.contact-form .message {
+    overflow: hidden;
+    height: 150px;
+}
+.contact-form .button {
+    background: #2b0e3d;
+    text-transform: uppercase;
+    font-family: 'Economica', sans-serif;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    margin: 20px auto 0;
+    width: 100%;
+    max-width: 100px;
+    height: 40px;
+    display: block;
+}
+
+.address {
+    width: 100%;
+    max-width: 370px;
+    margin: 30px auto 0;
+    color: #fff;
+}
+.address .panel {
+    border: none;
+}
+.address .panel .title h1 {
+    color: #fff;
+    padding-bottom: 10px;
+}
+.address .panel .content p span {
+    color: #fff;
+}
+.address .panel .content p a {
+    text-decoration: none;
+    color: #ffc01d;
+}
+.address .panel .content p a:hover {
+    color: #fff;
+}
+
+/*-------------------------------------------------
+FOOTER CLASSES
+-------------------------------------------------*/
+.footer {
+    width: 100%;
+    padding: 40px 0;
+    text-align: center;
+    color: #fff;
+    font-size: 22px;
+}
+.footer a {
+    color: #ac74d2;
+    text-decoration: none;
+}
+.footer a:hover {
+    color: #ac74d2;
+}
+.footer a.active {
+    color: #ac74d2;
+}
+.footer span {
+    color: #d1869b;
+}
+
+/*
+Video
+*/
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Se queda fijo en la pantalla */
+    z-index: 1; /* Se sitúa sobre el contenido */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Alto completo */
+    overflow: hidden; /* Habilita el scroll si es necesario */
+    background-color: rgb(0, 0, 0); /* Color de fondo */
+    background-color: rgba(0, 0, 0, 0.4); /* Negro con opacidad */
+    align-content: center;
+}
+
+
+/* Estilo base para modal-content */
+.modal-content {
+    position: relative;
+    background-color: transparent;
+    margin: 20px auto; /* Centrado en la pantalla */
+    padding: 10px;
+    width: 48%; /* Ajuste inicial para pantallas grandes */
+    height: auto; /* Altura automática */
+}
+.modal-content2 {
+    position: relative;
+    background-color: transparent;
+    /* Centrado en la pantalla */
+    margin: auto;
+    padding: 10px;
+    width: 48%; /* Ajuste inicial para pantallas grandes */
+    height: auto; /* Altura automática */
+}
+
+/* CSS for the fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    animation: fadeIn 0.5s;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+.modal-content img {
+    width: 100%;
+    height: auto;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 12px;
+    }
+    h1 {
+        font-size: 22px;
+    }
+    h2 {
+        font-size: 16px;
+    }
+    .button a, .contact-form .button {
+        width: 100%;
+        height: auto;
+        line-height: 20px;
+        font-size: 14px;
+        padding: 10px;
+    }
+    .contact-form label span {
+        float: none;
+        width: 100%;
+    }
+    .contact-form .input_text, .contact-form .message {
+        width: 100%;
+    }
+    .modal-content {
+        width: 100%;
+        height: auto;
+    }
+    .modal-content video{
+        width: 100%;
+        height: auto;
+    }
+    .modal-content2{
+        width: 100%;
+        height: auto;
+        margin: auto;
+    }
+    .modal-content2 video{
+        width: 100%;
+        height: auto;
+    }
+
+
+}
+
+
+

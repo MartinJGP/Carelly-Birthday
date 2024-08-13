@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Corazon :)</title>
+    <link rel="stylesheet" href="css/heart.css">
+    <link rel="icon" href="images/heartico.png">
+
+</head>
+<body>
+<div class="ballon" style="animation-delay: 0s;"></div>
+<div class="ballon" style="animation-delay: 2s;"></div>
+<div class="ballon-2" style="animation-delay: 4s;"></div>
+<div class="ballon-2" style="animation-delay: 6s;"></div>
+<canvas width="100%" height="100%" id="myLove"></canvas>
+
+<script src="js/heart.js"></script>
+<script>
+    document.querySelectorAll('.ballon').forEach(function(ballon) {
+        const randomOffset = Math.random() * 100 - 50 + 'vw';
+        ballon.style.setProperty('--randomOffset', randomOffset);
+    });
+    document.querySelectorAll('.ballon-2').forEach(function(ballon) {
+        const randomOffset = Math.random() * 100 - 50 + 'vw';
+        ballon.style.setProperty('--randomOffset', randomOffset);
+    });
+
+</script>
+</body>
+</html>
