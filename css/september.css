@@ -1,0 +1,35 @@
+/* Personalizar el estilo del slider (barra de progreso) */
+input[type="range"] {
+    -webkit-appearance: none; /* Desactiva el estilo predeterminado */
+    height: 4px; /* Grosor de la barra */
+    background: #d1d5db; /* Color de la barra */
+    border-radius: 5px; /* Bordes redondeados */
+    outline: none; /* Sin borde cuando se selecciona */
+    opacity: 0.7; /* Transparencia */
+    transition: opacity 0.15s ease-in-out;
+}
+
+/* Estilo del thumb (botón que se mueve en la barra) */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px; /* Ancho del thumb */
+    height: 16px; /* Altura del thumb */
+    border-radius: 50%; /* Forma circular */
+    background: #5a6d8c; /* Color del thumb */
+    cursor: pointer; /* Cambia el cursor cuando pasa sobre el thumb */
+    margin-top: -6px; /* Ajusta la posición del thumb en la barra */
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #5a6d8c;
+    cursor: pointer;
+}
+
+/* Cuando se pasa el mouse sobre el slider, aumenta la opacidad */
+input[type="range"]:hover {
+    opacity: 1;
+}
