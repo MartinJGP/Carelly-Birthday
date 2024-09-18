@@ -15,54 +15,52 @@
 
         /* Estilos personalizados para el slider de volumen */
         input[type="range"]::-webkit-slider-thumb {
-            background-color: #5a6d8c;
+            background-color: #9b59b6; /* Morado suave */
             width: 20px;
             height: 20px;
             border-radius: 50%;
         }
 
         input[type="range"]::-webkit-slider-runnable-track {
-            background-color: #d1d5db;
+            background-color: #dcd6f7; /* Morado muy suave */
             height: 4px;
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white flex items-center justify-center h-screen">
-<div class="absolute top-4 left-4  text-white text-center py-2 px-4 rounded-lg shadow-lg mb-4 opacity-75">
-    <p class="text-lg font-semibold">¿Qué te dije?,
-        Te dije que ganaríamos.</p>
-    Yo creo en tu Galaxia.
-    <br>
-     Me encontraste y me reconociste.
+<body class="bg-purple-200 text-purple-900 flex items-center justify-center h-screen">
+<div class="absolute top-4 left-4 bg-purple-300 text-purple-900 text-center py-2 px-4 rounded-lg shadow-lg mb-4 opacity-75">
+    <p class="text-lg font-semibold">No me importa si duele, quiero aferrarme a mis sueños</p>
+    Quiero volar, quiero volar alto en el cielo
 </div>
 
-<div class="absolute bottom-4 right-4 text-white text-center py-1 px-2 rounded-lg shadow-lg opacity-75">
-    <p class="text-lg font-semibold">Cuando odio ser yo, Cuando solo quiero desaparecer para siempre, Abro una puerta y allí esta tu corazón</p>
+<div class="absolute bottom-4 right-4 bg-purple-300 text-purple-900 text-center py-1 px-2 rounded-lg shadow-lg opacity-75">
+    <p class="text-lg font-semibold">No me arrepentiré del camino que tome</p>
+    No puedo contenerlo más, no puedo contenerlo más
 </div>
-<div class="bg-gray-800 p-6 rounded-lg shadow-lg w-96">
+<div class="bg-purple-100 p-6 rounded-lg shadow-lg w-96">
     <!-- Carátula del álbum -->
     <div class="mb-4">
         <h2 class="text-1xl font-bold">Our Song!</h2>
-        <img class="w-full h-60 rounded-lg shadow-lg object-cover" src="https://i.ytimg.com/vi/Ss5278wRxf4/maxresdefault.jpg" alt="Album Cover">
+        <img class="w-full h-60 rounded-lg shadow-lg object-cover" src="images/wingsoutro.jpeg" alt="Album Cover">
     </div>
 
     <!-- Título y artista -->
     <div class="text-center mb-4">
-        <h2 class="text-2xl font-bold">Magic Shop</h2>
-        <p class="text-gray-400">BTS</p>
+        <h2 class="text-2xl font-bold">OUTRO: Wings</h2>
+        <p class="text-purple-700">BTS</p>
     </div>
 
     <!-- Barra de progreso -->
     <div class="flex items-center mb-2">
-        <span id="current-time" class="text-gray-400 text-sm">0:00</span>
+        <span id="current-time" class="text-purple-700 text-sm">0:00</span>
         <input id="progress-bar" type="range" class="w-full mx-2" min="0" max="100" value="0">
-        <span id="total-duration" class="text-gray-400 text-sm">0:00</span>
+        <span id="total-duration" class="text-purple-700 text-sm">0:00</span>
     </div>
 
     <!-- Controles -->
     <div class="flex items-center justify-between">
         <!-- Botón de volumen -->
-        <button id="mute-btn" class="text-gray-400 hover:text-white focus:outline-none">
+        <button id="mute-btn" class="text-purple-700 hover:text-purple-900 focus:outline-none">
             <!-- Ícono de volumen activo (no muteado) -->
             <svg id="volume-on-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.05v13.9a.75.75 0 01-1.187.622l-3.346-2.49A1.5 1.5 0 014.5 15.655v-7.31a1.5 1.5 0 012.228-1.28l3.346-2.49A.75.75 0 0111 5.05zM15.682 8.318a5.373 5.373 0 010 7.364M18.364 5.636a9 9 0 010 12.728" />
@@ -73,12 +71,11 @@
             </svg>
         </button>
 
-
         <!-- Controles de reproducción -->
         <div class="flex items-center space-x-6">
 
             <!-- Botón de play/pausa -->
-            <button id="play-btn" class="bg-white text-gray-900 w-16 h-16 rounded-full shadow-lg hover:bg-gray-200 focus:outline-none">
+            <button id="play-btn" class="bg-purple-300 text-purple-900 w-16 h-16 rounded-full shadow-lg hover:bg-purple-400 focus:outline-none">
                 <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8 mx-auto">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 4.5l13.5 7.5-13.5 7.5V4.5z" />
                 </svg>
@@ -94,7 +91,7 @@
     </div>
 
     <!-- Elemento de audio oculto -->
-    <audio id="audio" src="assets/MagicShop.mp3"></audio>
+    <audio id="audio" src="assets/wings.MP3"></audio>
 </div>
 
 <script>
