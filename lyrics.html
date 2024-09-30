@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oa Boa</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .slide-in-left {
+        animation: slideInLeft 0.5s ease-in-out;
+      }
+      body {
+        background: rgb(203, 152, 232);
+        color: #090909;
+        width: 100vw;
+        height: 100dvh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .section1 {
+        h1 {
+          text-align: center;
+        }
+        .span-1 {
+          font-size: 4rem;
+        }
+        .span-2 {
+          font-size: 2rem;
+        }
+        .span-3 {
+          font-size: 3rem;
+        }
+        .span-4 {
+          font-size: 2.5rem;
+        }
+        button {
+          width: 75px;
+          height: 30px;
+          border: none;
+          border-radius: 15px;
+          color: rgb(230, 223, 223);
+          background: #2b0e3d;
+          margin-top: 20px;
+          &:hover {
+            background: #8519ce;
+          }
+        }
+      }
+      .letras {
+        span {
+          font-size: 4rem;
+        }
+      }
+      .meme-final {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; 
+        height: 100vh;
+        text-align: center;
+        span {
+          font-size: 3.2rem;
+        }
+      }
+      .desactivado {
+        display: none;
+      }
+      .oculto {
+        visibility: hidden;
+      }
+    </style>
+    <script type="module">
+      const $ = (e) => document.getElementById(e);
+      const section1 = $("s1");
+      const btn = $("btn");
+      const audio = $("myAudio");
+
+      const section2 = $("s2");
+      const pLetras = $("pLetras");
+
+      const letrasConfig = [
+        { palabras: ["Are you", "Lonely?"], tiempo: 100 },
+        { palabras: ["(Are you","Lonely?)"], tiempo: 3200 },
+        { palabras: ["Our fingers", "dancing"], tiempo: 5200 },
+        { palabras: ["When", "They meet"], tiempo: 7300 },
+        { palabras: ["You seem", "so lonely"], tiempo: 8900},
+        { palabras: ["(Are you","Lonely?)"], tiempo: 11500 },
+        { palabras: ["I'll be","The only"], tiempo: 13000 },
+        {palabras: ["Dream","You seek"], tiempo: 15000},
+        {palabras: ["So ","If you're"], tiempo: 17500},
+        {palabras: ["Lonely ",""], tiempo: 18500},
+        {palabras: ["No ","Need to"], tiempo: 20000},
+        {palabras: ["Show ","Me"], tiempo: 21000},
+        {palabras: ["If you're ","Lonely"], tiempo: 23000},
+        {palabras: ["Come be","Lonely"], tiempo: 24000},
+        {palabras: ["With","Me"], tiempo: 26000},
+        {palabras: ["Lonely"], tiempo: 27500, esUltimo: true}
+
+      ];
+
+      btn.addEventListener("click", () => {
+        section1.classList.add("desactivado");
+        section2.classList.remove("desactivado");
+
+        audio.volume = 1.0;
+        audio.play();
+        mostrarLetras(letrasConfig);
+      });
+
+      function mostrarLetras(config) {
+        config.forEach((letraObj) => {
+          setTimeout(() => {
+            pLetras.innerHTML = "";
+
+            const span1 = document.createElement("span");
+            span1.textContent = letraObj.palabras[0];
+            span1.classList.add("slide-in-left");
+            pLetras.appendChild(span1);
+
+            const saltoDeLinea = document.createElement("br");
+            pLetras.appendChild(saltoDeLinea);
+
+            if (letraObj.esUltimo) {
+              setTimeout(() => {
+                pLetras.innerHTML = "";
+                const gif = document.createElement("img");
+                const span = document.createElement("span");
+                const span2 = document.createElement("span");
+                const saltoDeLinea = document.createElement("br");
+
+                span.innerHTML = "Si te sientes sola, ven y perdámonos juntos<br />Wiwiwiwi <3";
+                gif.src = "images/two.jpg";
+                pLetras.appendChild(span);
+                pLetras.appendChild(saltoDeLinea);
+                pLetras.appendChild(gif);
+                pLetras.classList.add("meme-final", "slide-in-left");
+              }, 2500);
+            } else {
+              const span2 = document.createElement("span");
+              span2.textContent = letraObj.palabras[1];
+              span2.classList.add("oculto", "slide-in-left");
+              pLetras.appendChild(span2);
+
+              setTimeout(() => {
+                span2.classList.remove("oculto");
+              }, 520);
+            }
+          }, letraObj.tiempo);
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div class="section1" id="s1">
+      <h1>
+        <span class="span-1">Oaa</span><br />
+        <span class="span-2">tengo que</span><br />
+        <span class="span-3">decirte</span><br />
+        <span class="span-4">que...</span><br />
+        <button id="btn">ver</button>
+      </h1>
+    </div>
+    <div class="section2 desactivado" id="s2">
+      <audio
+        id="myAudio"
+        src="assets/thisside.MP3"
+        preload="auto"
+        class="desactivado"
+      ></audio>
+      <p class="letras" id="pLetras">Hola</p>
+    </div>
+  </body>
+</html>
