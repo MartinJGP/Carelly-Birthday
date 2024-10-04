@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Oa Boa</title>
     <style>
@@ -9,6 +10,9 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+      }
+      body, .section1, .letras, .meme-final {
+        font-family: 'Poppins', sans-serif;
       }
       @keyframes slideInLeft {
         from {
@@ -24,8 +28,21 @@
       .slide-in-left {
         animation: slideInLeft 0.5s ease-in-out;
       }
+      @keyframes rotateSlightly {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(10deg);
+        }
+
+      }
+
+      .rotate-slightly {
+        animation: rotateSlightly 4s infinite alternate;
+      }
       body {
-        background: rgb(203, 152, 232);
+        background: rgb(189, 136, 234);
         color: #090909;
         width: 100vw;
         height: 100dvh;
@@ -89,7 +106,25 @@
         visibility: hidden;
       }
       .img-width-20 {
-        width: 20%;
+        width: 300px;
+      }
+      .reload-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #704c8a;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        border: none;
+        border-radius: 15px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .reload-button:hover {
+        background: #5e337c;
       }
     </style>
     <script type="module">
@@ -143,8 +178,6 @@
             const saltoDeLinea = document.createElement("br");
             pLetras.appendChild(saltoDeLinea);
 
-
-
             if (letraObj.esUltimo) {
               setTimeout(() => {
                 pLetras.innerHTML = "";
@@ -155,20 +188,30 @@
 
                 span.innerHTML = "Si te sientes sola, ven y estemos solos juntos<br />Wiwiwiwi <3";
                 gif.src = "images/cats.png";
+                gif.classList.add("rotate-slightly");
                 pLetras.appendChild(span);
                 pLetras.appendChild(saltoDeLinea);
-                pLetras.appendChild(gif);
+                pLetras.append(gif);
                 pLetras.classList.add("meme-final", "slide-in-left");
               }, 2500);
+
+              // Add image element for the last word
+              const img = document.createElement("img");
+              img.src = "images/cat16.png";
+              img.classList.add("slide-in-left", "img-width-20");
+              img.style.display = "block";
+              img.style.margin = "10px auto";
+              pLetras.appendChild(img);
             } else {
               const span2 = document.createElement("span");
               span2.textContent = letraObj.palabras[1];
               span2.classList.add("oculto", "slide-in-left");
               pLetras.appendChild(span2);
-// Add image element
+
+              // Add image element
               const img = document.createElement("img");
               img.src = `images/cat${index + 1}.png`; // Use different images
-              img.classList.add("slide-in-left","img-width-20");
+              img.classList.add("slide-in-left", "img-width-20");
               img.style.display = "block";
               img.style.margin = "10px auto";
               pLetras.appendChild(img);
@@ -190,7 +233,7 @@
         <span class="span-3">decirte</span><br />
         <span class="span-4">que...</span><br />
         <img src="images/oa2.png" alt="xd" width="30%" style="display: block; margin: 10px auto;">
-        <button id="btn">ver</button>
+        <button id="btn">Ver</button>
 
       </h1>
 
@@ -203,6 +246,7 @@
         class="desactivado"
       ></audio>
       <p class="letras" id="pLetras">Hola</p>
+      <button id="reloadBtn" class="reload-button">Volver</button>
     </div>
   </body>
 </html>
