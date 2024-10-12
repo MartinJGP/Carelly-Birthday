@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body, .section1, .letras, .meme-final {
+        font-family: 'Poppins', sans-serif;
+    }
+    body {
+        background: linear-gradient(to bottom, #2542a6, #193c79);
+        color: #ffffff;
+        width: 100vw;
+        height: 100dvh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .section1 {
+        h1 {
+            text-align: center;
+        }
+        .span-1 {
+            font-size: 4rem;
+        }
+        .span-2 {
+            font-size: 2rem;
+        }
+        .span-3 {
+            font-size: 3rem;
+        }
+        .span-4 {
+            font-size: 2.5rem;
+        }
+        button {
+            width: 100px;
+            height: 40px;
+            border: none;
+            border-radius: 15px;
+            color: rgb(230, 223, 223);
+            background: #0d35a6;
+            margin-top: 20px;
+            &:hover {
+                background: #001a88;
+            }
+        }
+    }
+    .letras {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 100%;
+        font-size: 3rem;
+    }
+    .desactivado {
+        display: none;
+    }
+    .oculto {
+        visibility: hidden;
+    }
+    .img-width-20 {
+        width: 300px;
+    }
+    .reload-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #173d9b;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        border: none;
+        border-radius: 15px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .reload-button:hover {
+        background: #060e8c;
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .slide-in-left {
+        animation: slideInLeft 0.5s ease-in-out;
+    }
+    @keyframes rotateSlightly {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(10deg);
+        }
+
+    }
+
+    .rotate-slightly {
+        animation: rotateSlightly 4s infinite alternate;
+    }
+</style>
+<script type="module">
+    const $ = (e) => document.getElementById(e);
+    const section1 = $("s1");
+    const btn = $("btn");
+    const audio = $("myAudio");
+
+    const section2 = $("s2");
+    const pLetras = $("pLetras");
+    const letrasConfig = [
+        { palabras: ["Solo tu", "No necesito mas"], tiempo: 100 },
+        { palabras: ["Te adoraria","Lo que dure la eternidad"], tiempo: 2800 },
+        { palabras: ["Debes ser", "Perfecta para"], tiempo: 5200 },
+        { palabras: ["Perfecto", "Para"], tiempo: 7300 },
+        { palabras: ["Perfecto para mi", " Mi amor"], tiempo: 8900},
+        { palabras: ["Como fue","Que de papel cambie?"], tiempo: 11500 },
+        { palabras: ["Eras mi amiga","Y ahora eres mi mujer"], tiempo: 14000 },
+        {palabras: ["Debes ser perfectamente","Exactamente"], tiempo: 17000},
+        {palabras: ["Lo que yo siempre soñe"], tiempo: 20000,esUltimo: true},
+
+    ];
+    btn.addEventListener("click", () => {
+        section1.classList.add("desactivado");
+        section2.classList.remove("desactivado");
+
+        audio.volume = 1.0;
+        audio.play();
+        mostrarLetras(letrasConfig);
+    });
+    function mostrarLetras(config) {
+        config.forEach((letraObj, index) => {
+            setTimeout(() => {
+                pLetras.innerHTML = "";
+
+                const span1 = document.createElement("span");
+                span1.textContent = letraObj.palabras[0];
+                span1.classList.add("slide-in-left");
+                pLetras.appendChild(span1);
+
+                const saltoDeLinea = document.createElement("br");
+                pLetras.appendChild(saltoDeLinea);
+
+                if (letraObj.esUltimo) {
+                    setTimeout(() => {
+                        pLetras.innerHTML = "";
+                        const gif = document.createElement("img");
+                        const span = document.createElement("span");
+                        const span2 = document.createElement("span");
+                        const saltoDeLinea = document.createElement("br");
+
+                        span.innerHTML = "<h3 style='margin: 30px'>En ti encontré la perfección que siempre anhelé, una conexión profunda que se convierte en un regalo invaluable <3 </h3>";
+                        gif.src = "images/kittyfinal.gif";
+                        gif.classList.add("rotate-slightly");
+                        pLetras.appendChild(span);
+                        pLetras.appendChild(saltoDeLinea);
+                        pLetras.append(gif);
+                        pLetras.classList.add("meme-final", "slide-in-left");
+                    }, 2500);
+
+                    // Add image element for the last word
+                    const img = document.createElement("img");
+                    img.src = "images/kitty9.png";
+                    img.classList.add("slide-in-left", "img-width-20");
+                    img.style.display = "block";
+                    img.style.margin = "10px auto";
+                    pLetras.appendChild(img);
+                } else {
+                    const span2 = document.createElement("span");
+                    span2.textContent = letraObj.palabras[1];
+                    span2.classList.add("oculto", "slide-in-left");
+                    pLetras.appendChild(span2);
+
+                    // Add image element
+                    const img = document.createElement("img");
+                    img.src = `images/kitty${index + 1}.png`; // Use different images
+                    img.classList.add("slide-in-left", "img-width-20");
+                    img.style.display = "block";
+                    img.style.margin = "10px auto";
+                    pLetras.appendChild(img);
+
+                    setTimeout(() => {
+                        span2.classList.remove("oculto");
+                    }, 520);
+                }
+            }, letraObj.tiempo);
+        });
+    }
+    document.getElementById("reloadBtn").addEventListener("click", () => {
+        location.reload();
+    });
+</script>
+<body>
+<div class="section1" id="s1">
+    <h1>
+        <span class="span-1">A veces</span><br />
+        <span class="span-2">en medio del caos</span><br />
+        <span class="span-3">encontramos justo</span><br />
+        <span class="span-4">lo que necesitamos...</span><br />
+        <img src="images/kitty.png" alt="xd" width="30%" style="display: block; margin: 10px auto;">
+        <button id="btn">Y eso es</button>
+    </h1>
+</div>
+<div class="section2 desactivado" id="s2">
+    <audio
+            id="myAudio"
+            src="assets/perfecta.MP3"
+            preload="auto"
+            class="desactivado"
+    ></audio>
+    <p class="letras" id="pLetras">Hola</p>
+    <button id="reloadBtn" class="reload-button">Volver</button>
+</div>
+</body>
+</html>
