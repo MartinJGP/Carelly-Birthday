@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Love You</title>
+    <link rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+</head>
+<body>
+<audio src="assets/amar.MP3" autoplay loop></audio>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f1f1f1;
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        overflow: hidden;
+    }
+
+    #heartPhrase {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'Roboto', sans-serif;
+        font-size: 28px;
+        background: -webkit-linear-gradient(#cb25cb, #cb25cb);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        z-index: 1;
+    }
+
+    #canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    @media (max-width: 768px) {
+        #heartPhrase {
+            font-size: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #heartPhrase {
+            font-size: 15px;
+            top: auto;
+            bottom: 10%;
+            transform: translateX(-50%);
+        }
+    }
+    </style>
+<div id="heartPhrase">Mi vida te quiero tal y como eres<br>Te acompañare en cada paso que des ❤️</div>
+<canvas id="canvas" width="100%" height="100%">
+</canvas>
+<!-- js here -->
+<script src="js/corazon.js"></script>
+</body>
+</html>
