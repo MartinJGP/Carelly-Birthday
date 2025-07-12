@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Espejo - Sigue siendo tú</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: black;
+      color: white;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    #mirror {
+      border: 4px solid white;
+      width: 100%;
+      max-width: 350px;
+      height: 70vh;
+      max-height: 500px;
+      overflow: hidden;
+      position: relative;
+      border-radius: 10px;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+    }
+
+    .text {
+      font-size: 18px;
+      text-align: center;
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #000000;
+      border: 2px solid white;
+      color: white;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #333333;
+    }
+
+    .popup {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-size: 16px;
+      text-align: center;
+      max-width: 90%;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 10;
+    }
+
+    .popup.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 480px) {
+      .text {
+        font-size: 16px;
+      }
+      .btn {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="mirror">
+    <video id="camara" autoplay playsinline muted></video>
+  </div>
+
+  <div class="text">
+    A pesar de todo...<br><strong>Sigues siendo tú</strong>
+  </div>
+
+  <button class="btn" onclick="iniciarSecuencia()">Mostrar mensajes 🤍</button>
+
+  <div id="popup" class="popup"></div>
+
+  <audio id="musica" autoplay loop>
+    <source src="assets/His%20Theme.MP3" type="audio/mpeg">
+    Tu navegador no soporta audio.
+  </audio>
+
+  <script>
+  const mensajes = [
+    "Eres una persona increíble.",
+    "Tu sonrisa hermosa ilumina el día.",
+    "Cada paso que das es valioso.",
+    "Eres única y especial.",
+    "Tu fuerza es admirable.",
+    "Tu inteligencia brilla con luz propia.",
+    "Sigue brillando con tu luz.",
+    "Tu autenticidad es tu mayor tesoro.",
+    "Nunca dejes de ser tú misma.",
+    "Espero que aprendas a amarte tal y como eres.",
+    "A ser feliz contigo misma.",
+    "A estar sola.",
+    "A encontrar la compañía en ti misma.",
+    "A perdonarte por lo que no pudiste hacer.",
+    "Por lo que llegaste a hacer y no te gustó.",
+    "Pasito a pasito, día tras día.",
+    "Si lo decides ahora, comenzarás a ver los cambios.",
+    "Confío en ti y sé que lo lograrás.",
+    "El pasado no define tu futuro.",
+    "Tu futuro aún no está escrito.",
+    "Y si el presente cambia, y el futuro nos vuelve a unir, será un placer.",
+    "Volver a conocerte de nuevo, y volver a empezar de cero.",
+    "Para eso recuerda todas estas palabras y aprende de ellas.",
+    "Hasta eso, sigue siendo tú.",
+    "Tupananchiskama.",
+    "Supercalifragilísticoespialidoso 🐄."
+  ];
+
+  let indice = 0;
+  const popup = document.getElementById("popup");
+
+  function iniciarSecuencia() {
+    const boton = document.querySelector(".btn");
+    boton.disabled = true;
+    mostrarMensajeAutomatico();
+  }
+
+  function mostrarMensajeAutomatico() {
+    if (indice < mensajes.length) {
+      popup.textContent = mensajes[indice];
+      popup.classList.add("show");
+      indice++;
+      setTimeout(() => {
+        popup.classList.remove("show");
+        setTimeout(mostrarMensajeAutomatico, 500);
+      }, 3000);
+    } else {
+      popup.textContent = "wiwiwiwiwiwi";
+      popup.classList.add("show");
+    }
+  }
+
+
+  const video = document.getElementById('camara');
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then((stream) => {
+      video.srcObject = stream;
+    })
+    .catch((err) => {
+      console.error("No se pudo acceder a la cámara:", err);
+    });
+
+  window.addEventListener('click', () => {
+    document.getElementById('musica').play();
+  });
+
+  window.addEventListener('load', () => {
+    document.getElementById('musica').play();
+  });
+</script>
+</body>
+</html>
+
