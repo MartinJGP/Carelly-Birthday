@@ -18,14 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
             audio.pause();
             audio.play().then(() => {
                 setTimeout(() => {
-                    alert("Sabes el significado de las tulipanes?");
-                    alert("Los tulipanes morados son conocidos por representar una belleza única y misteriosa.")
-                    alert("Estos tulipanes también simbolizan la nobleza, el lujo y la elegancia.")
-                    alert("En muchas culturas, los tulipanes morados se asocian con la realeza y la admiración profunda.")
-                    alert("Regalar estos tulipanes es decir que eres única, admirada y profundamente especial.")
-                    alert("Hoy, en tu 18 cumpleaños, quiero celebrarte con la misma belleza y elegancia que representan estos tulipanes.")
-                    alert("Que esta nueva etapa de tu vida esté llena de momentos nobles y admirables, tal como lo simbolizan los tulipanes morados.")
-                    alert("¡Feliz 18 cumpleaños! Que tu día esté lleno de amor, alegría y mucha diversión. Con cariño, Martin :D.")
+                    alert("¡Feliz cumpleaños, Carelly! 🎉\n\nEspero que este cumpleaños esté lleno de alegría y sorpresas. Disfruta mucho de este día especial");
+                    alert("En tus 19 años, has logrado tanto y aún asi te queda un largo camino por recorrer.");
+                    alert("Recuerda siempre que la vida es un viaje lleno de aprendizajes, oportunidades y nuevas metas. Espero sigas brillando y persiguiendo tus sueños ");
+                    alert("Te deseo un año lleno de cariño, felicidad y éxitos. ¡Feliz cumpleaños, Carelly! ");
+                    alert("wiwiwiwi")
+                    alert("🐄");
+                    audio.setTimeout=1;
                 }, 100);
             });
 

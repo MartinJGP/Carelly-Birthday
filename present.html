@@ -12,7 +12,9 @@
 </head>
 
 <body>
-
+<h1 style="font-size: 40px">
+    00:00
+</h1>
 <!-- Añade esto en tu archivo index.html dentro del body -->
 <div class="vaca" style="animation-delay: 0s;"></div>
 <div class="vaca" style="animation-delay: 2s;"></div>
@@ -51,12 +53,12 @@
     <span>l</span>
     <span>y</span>
 </div>
-<div class="description">
-    <span>Pasala bonito, te deseo lo mejor, que cumplas muchos años mas y que todos tus sueños se hagan realidad! 🌸</span>
+<div class="description" >
+    <span>En este dia espero la pases bien con tus amigos y familia, pasala de la refurinfunflai, un años mas de vida, un año mas de aventuras y de cosas por aprender, un nuevo año para mejorar y buscar ser la mejor version de ti.</span>
 </div>
 <div class="button">
     <button class="botones">
-        <a href="flowers.html"  style="color: #fff;">Flores :D</a>
+        <a href="flowers.html"  style="color: #fff;">Flores wiwiwiw</a>
     </button>
 </div>
 
@@ -76,7 +78,17 @@
     //cooldown
     document.addEventListener("DOMContentLoaded", function() {
         const countdownElement = document.getElementById('countdown');
-        const targetDate = new Date(new Date().getFullYear(), 7, 13); // 13 de agosto del año actual. Los meses son base 0.
+        // Fecha objetivo: 13 de agosto a las 12:00
+        const targetDate = new Date(new Date().getFullYear(), 7, 13, 0, 0, 0);//7, 13, 0, 0, 0
+
+        // Elementos de audio
+        const audio1 = new Audio('assets/OutroWings.MP3'); // Canción mientras corre
+        audio1.loop = true;
+        const audio2 = new Audio('assets/count4.MP3'); // Canción últimos 10 segundos
+        const audio3 = new Audio('assets/zero.mp3'); // Canción final
+        let audio1Started = false;
+        let audio2Started = false;
+        let audio3Started = false;
 
         function updateCountdown() {
             const now = new Date();
@@ -89,10 +101,28 @@
 
             if (difference > 0) {
                 countdownElement.innerHTML = `Aun Faltan ${days} días, ${hours} horas, ${minutes} minutos, ${seconds} segundos :D`;
+                // Reproducir canción 1 si no ha iniciado y no estamos en los últimos 10 segundos
+                if (!audio1Started && difference > 10000) {
+                    audio1.play();
+                    audio1Started = true;
+                }
+                // Cambiar a canción 2 cuando falten 10 segundos
+                if (difference <= 5000 && !audio2Started) {
+                    audio1.pause();
+                    audio2.play();
+                    audio2Started = true;
+                }
             } else {
                 countdownElement.style.display = 'none';
                 document.body.classList.remove("not-loaded");
                 clearInterval(intervalId); // Detiene la actualización del contador
+                // Detener canciones anteriores y reproducir la final
+                audio1.pause();
+                audio2.pause();
+                if (!audio3Started) {
+                    audio3.play();
+                    audio3Started = true;
+                }
             }
         }
 

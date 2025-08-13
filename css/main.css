@@ -47,7 +47,7 @@ body{
     left: calc(50% + var(--randomOffset)); /* Ajustado para usar correctamente la variable */
     width: 150px;
     height: 130px;
-    background-image: url('../images/flor.png');
+    background-image: url('../images/cow.png');
     background-size: cover;
     animation: caida 8s linear infinite;
     z-index: 1;
@@ -164,6 +164,9 @@ body{
     font-size: 1.5rem;
     margin-bottom: 20px;
     z-index: 3;
+    margin: 10px;
+    text-align: center;
+
 }
 
 .button a{
