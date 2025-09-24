@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Más allá del mar 🌊</title>
+    <!-- Fuente estilo 'gótica' para evocar Shingeki -->
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: auto; /* permitir scroll en pantallas pequeñas */
+            color: white;
+        }
+
+        body {
+            background: url("images/eren.jpg") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            backdrop-filter: brightness(0.85);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Frase principal sin fondo: texto grande, con sombra para legibilidad */
+        .frase {
+            font-family: 'UnifrakturCook', 'Segoe UI', serif;
+            font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+            max-width: 900px;
+            margin: 10px 20px;
+            padding: 12px 18px;
+            background: transparent; /* eliminado fondo */
+            border-radius: 0;
+            box-shadow: none;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.75);
+            line-height: 1.1;
+            animation: fadeIn 1.8s ease forwards;
+        }
+
+        /* Animación suave */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Frases secundarias */
+        .frase-secundaria {
+            margin-top: 12px;
+            font-size: clamp(0.9rem, 2.2vw, 1.3rem);
+            opacity: 0.9;
+            animation: fadeIn 2.4s ease forwards;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+        }
+
+        /* Botones */
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .foto-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.18);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.25s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .foto-btn:hover {
+            background: rgba(255,255,255,0.36);
+        }
+
+        /* Modal / overlay para la foto central opacada */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.6);
+            z-index: 60;
+            padding: 20px;
+        }
+
+        .overlay.hidden { display: none; }
+
+        .modal {
+            max-width: 92vw;
+            max-height: 88vh;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+            position: relative; /* para que el close-btn se posicione correctamente */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.12);
+        }
+
+        /* Contenedor slideshow dentro del modal */
+        .slideshow {
+            width: min(92vw, 900px);
+            height: 80vh; /* usar 80vh para asegurar mayor cobertura vertical y evitar franjas */
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            background: transparent; /* quitar fondo negro para evitar franjas visibles */
+        }
+
+        /* Track horizontal que contiene las slides */
+        .slides-track {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            transition: transform 0.8s ease;
+            will-change: transform;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.9) saturate(0.95);
+            display: block;
+        }
+
+        /* pequeño botón de cerrar en la esquina */
+        .close-btn {
+            position: absolute;
+            right: 22px;
+            top: 18px;
+            background: rgba(255,255,255,0.12);
+            border: none;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 90;
+        }
+
+        /* Transient image (sin overlay) */
+        .transient {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.98);
+            z-index: 65;
+            max-width: 80vw;
+            max-height: 70vh;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        /* Mostrar cuando aria-hidden es false (el JS cambia este atributo) */
+        .transient[aria-hidden="false"] {
+            opacity: 1; /* algo opaca */
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+
+        .transient img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            filter: brightness(0.9);
+        }
+
+        /* Big play overlay: botón grande centrado para activar audio (útil si autoplay está bloqueado) */
+        .big-play {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.5);
+            z-index: 120;
+            transition: opacity 0.25s ease;
+        }
+
+        .big-play.hidden { display: none; opacity: 0; }
+
+        .big-play button {
+            background: rgba(255,255,255,0.12);
+            border: 2px solid rgba(255,255,255,0.18);
+            color: white;
+            padding: 18px 26px;
+            font-size: 1.6rem;
+            border-radius: 999px;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+        }
+
+        /* Responsive: ajustes cuando la pantalla es pequeña */
+        @media (max-width: 520px) {
+            .frase { font-size: clamp(1.4rem, 4.5vw, 2rem); }
+            .frase-secundaria { font-size: 0.95rem; }
+            .close-btn { right: 12px; top: 10px; }
+            .slideshow { height: 60vh; }
+        }
+    </style>
+</head>
+<body>
+<div class="frase">¿Si matamos a los enemigos mas allá del mar, por fin podremos ser libres?</div>
+<div id="shingekiCredit" class="frase-secundaria" role="button" tabindex="0">— Shingeki no Kyojin</div>
+
+<div class="controls">
+    <!-- Solo queda el botón de ver fotos -->
+    <button class="foto-btn" id="openFoto" aria-label="Abrir foto">Ver foto</button>
+</div>
+
+<!-- Autoplay preferente: inicialmente en mute para evitar bloqueos, luego intentamos reactivar sonido desde interacción de usuario -->
+<audio id="music" autoplay muted loop preload="auto">
+    <source src="assets/eren.m4a" type="audio/mp4">
+    Tu navegador no soporta audio.
+</audio>
+
+<!-- Overlay/Modal para la foto central opacada -->
+<div id="overlay" class="overlay hidden" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Galería de fotos">
+        <button class="close-btn" id="closeFoto" type="button" aria-label="Cerrar">✕</button>
+        <div id="slideshow" class="slideshow" aria-live="polite">
+            <div class="slides-track">
+                <!-- Incluir todas las imágenes snk encontradas -->
+                <div class="slide"><img src="images/snk (1).jpg" alt="SNK 1"/></div>
+                <div class="slide"><img src="images/snk (2).jpg" alt="SNK 2"/></div>
+                <div class="slide"><img src="images/snk (3).jpg" alt="SNK 3"/></div>
+                <div class="slide"><img src="images/snk (4).jpg" alt="SNK 4"/></div>
+                <div class="slide"><img src="images/snk (5).jpg" alt="SNK 5"/></div>
+                <div class="slide"><img src="images/snk (6).jpg" alt="SNK 6"/></div>
+                <div class="slide"><img src="images/snk (7).jpg" alt="SNK 7"/></div>
+                <div class="slide"><img src="images/snk (8).jpg" alt="SNK 8"/></div>
+                <div class="slide"><img src="images/snk (9).jpg" alt="SNK 9"/></div>
+                <div class="slide"><img src="images/snk (10).jpg" alt="SNK 10"/></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Imagen temporal centrada SIN overlay -->
+<div id="transient" class="transient" aria-hidden="true">
+    <img src="images/snktransitent.png" alt="Imagen temporal" />
+</div>
+
+<!-- Big play overlay: aparece cuando se requiere interacción para habilitar audio -->
+
+<script>
+    // --- Estado global y elementos ---
+    let isPlaying = false;
+    const music = document.getElementById('music');
+    const overlay = document.getElementById('overlay');
+    const openFoto = document.getElementById('openFoto');
+    const closeFoto = document.getElementById('closeFoto');
+    const shingekiCredit = document.getElementById('shingekiCredit');
+    const transient = document.getElementById('transient');
+    const slideshowEl = () => document.getElementById('slideshow');
+
+    let transientTimer = null;
+    let slides = [];
+    let slideIndex = 0;
+    let slideInterval = null;
+
+    // --- Autoplay logic ---
+    // Intentamos autoplay audible; si falla, reproducimos en muted. No mostramos botones.
+    function tryAutoplay() {
+        if (!music) return;
+        // intentamos reproducir audible primero
+        music.muted = false;
+        const p = music.play();
+        if (p !== undefined) {
+            p.then(() => {
+                isPlaying = !music.paused;
+                // si el navegador permitió autoplay audible, ya está listo
+                console.log('Autoplay audible OK');
+            }).catch((err) => {
+                // Audible bloqueado; intentar reproducir en silencio
+                console.warn('Autoplay audible bloqueado, intentando en modo silenciado:', err);
+                music.muted = true;
+                const p2 = music.play();
+                if (p2 !== undefined) {
+                    p2.then(() => {
+                        isPlaying = true;
+                        console.log('Autoplay en modo silenciado OK');
+                    }).catch((err2) => {
+                        console.warn('Autoplay en modo silenciado también falló:', err2);
+                        isPlaying = false;
+                    });
+                }
+            });
+        }
+    }
+
+    // Registrar la llamada en load (tal como pediste)
+    window.addEventListener('load', () => {
+        tryAutoplay();
+    });
+
+    // En ausencia de botones visibles: permitir que la PRIMERA interacción del usuario quite el mute y reproduzca.
+    function handleFirstUserGesture() {
+        try {
+            if (music && music.muted) music.muted = false;
+            if (music && music.paused) music.play().catch(()=>{});
+            isPlaying = music ? !music.paused : false;
+        } catch (e) {
+            console.warn('Error al intentar activar audio tras interacción:', e);
+        } finally {
+            // remover listeners después de la primera interacción
+            document.removeEventListener('pointerdown', handleFirstUserGesture, true);
+            document.removeEventListener('keydown', handleFirstUserGesture, true);
+        }
+    }
+    document.addEventListener('pointerdown', handleFirstUserGesture, true);
+    document.addEventListener('keydown', handleFirstUserGesture, true);
+
+    // --- Slideshow / carrusel ---
+    function updateTrackPosition(i) {
+        const container = slideshowEl();
+        if (!container) return;
+        const track = container.querySelector('.slides-track');
+        if (!track) return;
+        track.style.transform = `translateX(-${i * 100}%)`;
+        slideIndex = i;
+    }
+
+    function startSlideshow(interval = 3000) {
+        stopSlideshow();
+        const container = slideshowEl();
+        if (!container) return;
+        const track = container.querySelector('.slides-track');
+        if (!track) return;
+        slides = Array.from(track.querySelectorAll('.slide'));
+        if (!slides.length) return;
+        updateTrackPosition(0);
+        slideInterval = setInterval(() => {
+            const next = (slideIndex + 1) % slides.length;
+            updateTrackPosition(next);
+        }, interval);
+    }
+
+    function stopSlideshow() {
+        if (slideInterval) {
+            clearInterval(slideInterval);
+            slideInterval = null;
+        }
+    }
+
+    // --- Transient image (imagen temporal) ---
+    function showTransientImage(duration = 3000) {
+        if (!transient) return;
+        if (transientTimer) clearTimeout(transientTimer);
+        transient.setAttribute('aria-hidden', 'false');
+        transientTimer = setTimeout(() => {
+            transient.setAttribute('aria-hidden', 'true');
+            transientTimer = null;
+        }, duration);
+    }
+
+    // --- Modal / controles del slideshow ---
+    if (openFoto) {
+        openFoto.addEventListener('click', () => {
+            overlay.classList.remove('hidden');
+            overlay.setAttribute('aria-hidden', 'false');
+            setTimeout(() => closeFoto.focus(), 50);
+            startSlideshow(3000);
+            // primer gesto del usuario puede quitar el mute si el autoplay fue muted
+            handleFirstUserGesture();
+        });
+    }
+
+    function closeModal() {
+        overlay.classList.add('hidden');
+        overlay.setAttribute('aria-hidden', 'true');
+        stopSlideshow();
+    }
+
+    if (closeFoto) closeFoto.addEventListener('click', closeModal);
+    if (overlay) overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    if (shingekiCredit) {
+        shingekiCredit.addEventListener('click', () => {
+            showTransientImage(3000);
+            handleFirstUserGesture();
+        });
+        shingekiCredit.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                showTransientImage(3000);
+                handleFirstUserGesture();
+            }
+        });
+    }
+
+    // Ajuste responsive: reiniciar slideshow posición al redimensionar para evitar glitches
+    window.addEventListener('resize', () => {
+        if (slideIndex && slideshowEl()) updateTrackPosition(slideIndex);
+    });
+</script>
+</body>
+</html>

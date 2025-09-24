@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Girasoles para Ti 🌻</title>
+    <style>
+        :root{--bg1:#fff7e6;--bg2:#ffe8a1;--accent:#ffcc33}
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+        body{
+            background: radial-gradient(circle at 10% 10%, #fef9ef 0%, var(--bg1) 30%, var(--bg2) 100%);
+            overflow:hidden; display:flex; align-items:center; justify-content:center;
+        }
+        .scene{position:relative;width:100%;height:100vh}
+
+        .sunflower{position:absolute; transform-origin:center center; will-change:transform;}
+        .sunflower .center{
+            position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+            width:40%; height:40%; border-radius:50%; background: radial-gradient(circle at 30% 30%, #8b5a2b, #5b3a1a); box-shadow:inset -6px -6px 18px rgba(0,0,0,0.12);
+            z-index:2;
+        }
+        .sunflower .petal{
+            position:absolute; left:50%; top:50%;
+            transform-origin:50% 50%;
+            width:30%; height:18%; background: linear-gradient(90deg,#ffd44d,#ffb84d); border-radius:50% 50% 40% 40%/60% 60% 40% 40%; box-shadow:0 6px 10px rgba(0,0,0,0.12); z-index:1; opacity:1;
+        }
+
+         .sunflower.spin{ animation: spin var(--spin,14s) linear infinite; }
+         @keyframes spin{ from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+        .sunflower.burst .petal{
+             animation: petal-burst 1s ease-in-out forwards;
+         }
+         @keyframes petal-burst{
+             0%{ transform: translate(-50%, -50%) rotate(var(--rot)) translateX(var(--r)) scale(1); opacity:1 }
+             40%{ transform: translate(-50%, -50%) rotate(var(--rot)) translateX(calc(var(--r) * 3)) scale(1.15); opacity:1 }
+             100%{ transform: translate(-50%, -50%) rotate(var(--rot)) translateX(var(--r)) scale(1); opacity:1 }
+         }
+
+        .motivation{
+            position:fixed; left:50%; top:20%; transform:translate(-50%, -50%) scale(0.3);
+            background: transparent; color:#2b2b2b; padding:0; border-radius:0;
+            font-weight:700; z-index:2000; font-size:clamp(18px,3.2vw,26px);
+            pointer-events:none; opacity:1; text-align:center; text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+
+        }
+        @keyframes pop {
+            0% { transform: translate(-50%, -50%) scale(0.25); opacity:0 }
+            60% { transform: translate(-50%, -50%) scale(1.06); opacity:1 }
+            100% { transform: translate(-50%, -50%) scale(1); opacity:1 }
+        }
+
+        .mot-word{ display:inline-block; white-space:pre; transform-origin: center; }
+        @keyframes word-fall {
+            to { transform: translateY(140vh) rotate(25deg); opacity:0 }
+        }
+
+         .overlay{
+             position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); text-align:center; z-index:10;
+             background: rgba(255,255,255,0.8); padding:28px 36px; border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,0.12);
+             backdrop-filter: blur(6px);
+         }
+         .phrase{font-size:clamp(20px,3vw,32px); color:#3b3b3b; margin:0 0 14px 0; font-weight:600}
+         .sub{color:#6b6b6b; margin-bottom:18px}
+         .btn{background:var(--accent); border:none; color:#2b2b2b; padding:10px 18px; font-size:16px; border-radius:10px; cursor:pointer; box-shadow:0 6px 14px rgba(255,204,51,0.25)}
+         .btn:active{transform:translateY(1px)}
+         .credit{font-size:12px;color:#7a7a7a;margin-top:10px}
+
+         @media (max-width:600px){ .overlay{padding:18px 20px} }
+     </style>
+ </head>
+
+    <div id="motivation-root"></div>
+     <div class="scene" id="scene">
+         <div class="overlay">
+             <div class="phrase">Estas no se marchitan :)</div>
+             <div class="sub">Estoy orgulloso de ti, de tu esfuerzo y de cómo cada día buscas mejorar. </div>
+             <button id="burstBtn" class="btn">Gira gira</button>
+             <div class="credit">Esto si no es cutre?</div>
+         </div>
+     </div>
+
+    <audio id="music" src="assets/florecitas.mp3" preload="auto"></audio>
+
+     <script>
+
+        const scene = document.getElementById('scene');
+        const petalsCount = 12;
+
+        function getSunCount(){ return window.matchMedia('(max-width:768px)').matches ? 8 : 12 }
+
+
+        let resizeTimer = null;
+        window.addEventListener('resize', ()=>{
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(()=>{
+
+                const desired = getSunCount();
+                const current = document.querySelectorAll('.sunflower').length;
+                if(current !== desired){
+                    generateSunflowers(desired);
+                }
+            }, 250);
+        });
+
+        function rand(min,max){ return Math.random()*(max-min)+min }
+
+         // utilidad distancia euclidiana
+         function dist(a,b){ const dx = a.x-b.x; const dy = a.y-b.y; return Math.sqrt(dx*dx+dy*dy) }
+
+
+        function generateSunflowers(count){
+
+            scene.querySelectorAll('.sunflower').forEach(el=>el.remove());
+            const placed = [];
+            const minGap = 20;
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+
+            for(let i=0;i<count;i++){
+                const sun = document.createElement('div');
+                sun.className='sunflower spin';
+                const size = Math.floor(rand(100,220));
+                sun.style.width = size+'px';
+                sun.style.height = size+'px';
+
+                let cx, cy;
+                let attempts = 0;
+                const maxAttempts = 300;
+                while(attempts < maxAttempts){
+                    attempts++;
+                    const margin = 20 + size/2;
+                    cx = Math.floor(rand(margin, vw - margin));
+                    cy = Math.floor(rand(margin, vh - margin));
+                    let ok = true;
+                    for(const p of placed){
+                        const minDist = (size/2) + (p.size/2) + minGap;
+                        if(dist({x:cx,y:cy},{x:p.cx,y:p.cy}) < minDist){ ok = false; break }
+                    }
+                    if(ok) break;
+                }
+                if(!cx) {
+                    const margin = 20 + size/2;
+                    cx = Math.floor(rand(margin, vw - margin));
+                    cy = Math.floor(rand(margin, vh - margin));
+                }
+
+                sun.style.left = (cx - size/2) + 'px';
+                sun.style.top = (cy - size/2) + 'px';
+                sun.style.setProperty('--spin', rand(8,26)+'s');
+                placed.push({cx,cy,size});
+
+                const center = document.createElement('div');
+                center.className='center';
+                sun.appendChild(center);
+
+                for(let p=0;p<petalsCount;p++){
+                    const petal = document.createElement('div');
+                    petal.className='petal';
+                    const angle = (360/petalsCount)*p;
+                    const r = Math.round(size*0.18)+'px';
+                    petal.style.setProperty('--rot', angle+'deg');
+                    petal.style.setProperty('--r', r);
+                    petal.style.transform = `translate(-50%,-50%) rotate(${angle}deg) translateX(var(--r))`;
+                    petal.style.zIndex = 1;
+                    sun.appendChild(petal);
+                }
+
+                sun.addEventListener('click', (ev)=>{
+                    ev.stopPropagation();
+                    const msg = MESSAGES[Math.floor(Math.random()*MESSAGES.length)];
+                    showMessage(msg, { duration: 3000 });
+                });
+                scene.appendChild(sun);
+            }
+        }
+
+        // mensajes compartidos
+        const MESSAGES = [
+             'Estoy orgulloso de ti',
+            'No te lamentes',
+             'Sigue así, lo estás haciendo bien',
+             'Al final todo valdra la pena',
+             'Poco a poco',
+             'Mas alla del mar',
+             'Te admiro',
+             'Atun con mayonesa',
+                'Wiwiwiwiwiw',
+                '🐄🐄🐄',
+                'Despues de todo, eres tú',
+                'le vent se lève',
+            'il faut tenter de vivre'
+
+         ];
+
+
+        window.addEventListener('load', ()=>{
+
+           generateSunflowers(getSunCount());
+           tryAutoplay();
+       });
+
+
+        function tryAutoplay(){
+            const audio = document.getElementById('music');
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+
+                }).catch(error => {
+
+                    console.log('Autoplay fallido, esperando interacción del usuario.');
+
+                    const btn = document.getElementById('burstBtn');
+                    btn.textContent = 'Presiona para iniciar la música y girar';
+                    btn.disabled = false;
+                    btn.addEventListener('click', () => {
+                        audio.play();
+                        btn.textContent = 'Gira gira';
+                    }, { once: true });
+                });
+            }
+        }
+
+        // Burst button behavior: solo activa la animación de pétalos (sin tocar el audio)
+        const btn = document.getElementById('burstBtn');
+        btn.addEventListener('click', ()=>{
+            btn.disabled = true; btn.textContent = 'wiiii...';
+            const suns = document.querySelectorAll('.sunflower');
+            const DURATION = 1000;
+            suns.forEach(sun => {
+                const petals = sun.querySelectorAll('.petal');
+                petals.forEach((petal,idx)=>{
+                    const delay = (idx * 40) + Math.random()*60;
+                    petal.style.animationDelay = delay + 'ms';
+                });
+                sun.classList.remove('burst');
+                void sun.offsetWidth;
+                sun.classList.add('burst');
+            });
+            setTimeout(()=>{ btn.disabled=false; btn.textContent='Gira gira' }, DURATION + 500);
+        });
+
+
+        function showMessage(text, opts = {}){
+            const root = document.getElementById('motivation-root');
+            const duration = opts.duration ?? 1000;
+            const top = opts.top ?? 20;
+            const el = document.createElement('div');
+            el.className = 'motivation';
+            el.style.top = top + '%';
+
+            el.style.animation = `pop ${duration}ms cubic-bezier(.2,.8,.2,1) forwards`;
+
+            el.textContent = text;
+            root.appendChild(el);
+
+            setTimeout(()=>{
+                const words = text.split(' ');
+                el.textContent = '';
+                words.forEach((w, i)=>{
+                    const span = document.createElement('span');
+                    span.className = 'mot-word';
+                    span.textContent = w + (i < words.length - 1 ? ' ' : '');
+                    el.appendChild(span);
+                });
+                // forzamos reflow
+                void el.offsetWidth;
+                // animar cada palabra con retraso escalonado
+                const wordEls = el.querySelectorAll('.mot-word');
+                wordEls.forEach((we, idx)=>{
+                    const delay = idx * 90; // ms
+                    we.style.animation = `word-fall 1000ms ease forwards ${delay}ms`;
+                });
+                // eliminar el contenedor cuando termine la última animación
+                const lastDelay = (wordEls.length - 1) * 90 + 1000;
+                setTimeout(()=>{ el.remove(); }, lastDelay + 100);
+            }, duration);
+        }
+
+
+     </script>
+ </body>
+ </html>
